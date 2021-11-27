@@ -1,0 +1,42 @@
+<!doctype html>
+<!-- Archivo que permite obtener datos de una API de 'chuck norris' : https://api.chucknorris.io/-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJAX</title>
+</head>
+
+<body>
+    <h1>Learn AJAX</h1>
+    <div id="output"></div>
+    <button id="loadNew">Get a Joke</button>
+    <script type="text/javascript">
+        // Creo una variable 'broma'
+        var joker = document.querySelector('#trigger');
+        // console.log('joker es : ', joker);
+        joker.addEventListener('click', loadJoke);
+        console.log('joker 1 es : ', joker);
+
+        function loadJoke() {
+            // Creo la peticion ajax
+            var ajax = new XMLHttpRequest();
+            // Consulta el estado de la peticion
+            ajax.onreadystatechange = function() {
+                if (this.readyState == 4) {
+                    if (this.status == 200) {
+                        console.log(this.responseText);
+                    }
+                }
+            }
+            console.log('joker 3 es : ', joker);
+            ajax.open('GET', 'https://api.chucknorris.io/jokes/random', true);
+            ajax.send();
+        }
+    </script>
+
+</body>
+
+</html>

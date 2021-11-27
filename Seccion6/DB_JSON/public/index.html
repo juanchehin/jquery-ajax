@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<style>
+    .btn {
+        border: 1px black;
+        padding: 10 px;
+        display: inline-block;
+        width: 100px;
+        text-align: center;
+    }
+</style>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Server</title>
+</head>
+
+<body>
+
+    <h1>JSON server AJAX testing</h1>
+    <div id="message"></div>
+    <div id="load1" class="btn">load 1</div>
+    <script>
+        var load1 = document.querySelector('#load1');
+        var message = document.getAnimations('message');
+        load1.addEventListener('click', function() {
+            makeRequest('http://localhost:3000/posts', 'GET', {})
+        })
+
+        function makeRequest(url, requestType, data) {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4) {
+                    message.innerHTML = xhr.response;
+                    console.log(JSON.parse(xhr.response))
+                }
+            }
+            xhr.open(requestType, url, true)
+            xhr.send()
+        }
+    </script>
+
+</body>
+
+</html>

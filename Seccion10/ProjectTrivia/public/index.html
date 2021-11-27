@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>La trivia de Chehin! </title>
+    <!-- <style>
+        #selAnswers div {
+            border: 1px solid black;
+            padding: 10px;
+            margin: 5px;
+            display: inline-block;
+        }
+        
+        .cat {
+            font-size: 0.7em;
+        }
+        
+        .que {
+            font-size: 1.5em;
+        }
+    </style> -->
+</head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+<body>
+
+    <div class="jumbotron">
+        <h1 class="display-4 text-center">
+            <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-joystick" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M7.106 15.553L.553 12.276A1 1 0 0 1 0 11.382V9.471a1 1 0 0 1 .606-.89L6 6.269v1.088L1 9.5l5.658 2.83a3 3 0 0 0 2.684 0L15 9.5l-5-2.143V6.27l5.394 2.312a1 1 0 0 1 .606.89v1.911a1 1 0 0 1-.553.894l-6.553 3.277a2 2 0 0 1-1.788 0z"/>
+            <path fill-rule="evenodd" d="M7.5 9.5v-6h1v6h-1z"/>
+            <path d="M10 9.75c0 .414-.895.75-2 .75s-2-.336-2-.75S6.895 9 8 9s2 .336 2 .75zM10 2a2 2 0 1 1-4 0 2 2 0 0 1 4 0z"/>
+          </svg> La trivia de Chehin!
+            <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-joystick" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M7.106 15.553L.553 12.276A1 1 0 0 1 0 11.382V9.471a1 1 0 0 1 .606-.89L6 6.269v1.088L1 9.5l5.658 2.83a3 3 0 0 0 2.684 0L15 9.5l-5-2.143V6.27l5.394 2.312a1 1 0 0 1 .606.89v1.911a1 1 0 0 1-.553.894l-6.553 3.277a2 2 0 0 1-1.788 0z"/>
+            <path fill-rule="evenodd" d="M7.5 9.5v-6h1v6h-1z"/>
+            <path d="M10 9.75c0 .414-.895.75-2 .75s-2-.336-2-.75S6.895 9 8 9s2 .336 2 .75zM10 2a2 2 0 1 1-4 0 2 2 0 0 1 4 0z"/>
+          </svg>
+        </h1>
+        <div class="card">
+            <div class="card-body">
+                <strong>Puntuacion : </strong><span id="score"></span>
+            </div>
+        </div>
+
+        <div id="output"></div>
+        <br>
+        <div id="selAnswers"></div>
+        <br><br><br>
+        <a type="button" class="btn btn-primary btn-lg btn-block" id="btn">Click!</a>
+    </div>
+    <script>
+        var btn = document.getElementById('btn');
+        btn.addEventListener('click', nextItem)
+        var answers = {
+            'correct': 0,
+            'wrong': 0
+        }
+        var output = document.getElementById('output');
+        var selAnswer = document.getElementById('selAnswers')
+
+        function nextItem() {
+            btn.style.display = 'none'
+            var url = 'https://opentdb.com/api.php?amount=1';
+            var html = ' '
+            requestAJAX(url, function(data) {
+                console.log(data.results[0]);
+                var obj = data.results[0];
+                html += '<div><div class="alert alert-info" role="alert"> <strong>Categoria : </strong>' + obj.category + '</div>';
+                html += '<div class="alert alert-warning" role="alert" ><h3>' + obj.question + '</h3></div>';
+                html += '</div>'
+                output.innerHTML = html;
+                questionBuilder(obj.correct_answer, obj.incorrect_answers)
+            })
+        }
+
+        function correctAnswerIs() {
+            var els = document.querySelectorAll('#selAnswers div')
+            for (x = 0; x < els.length; x++) {
+                if (els[x].getAttribute('data-cor') == "true") {
+                    return els[x].innerText
+                }
+            }
+
+        }
+
+        function sendAnswer() {
+            var res = event.target.getAttribute('data-cor');
+            var corectAnswerValue = correctAnswerIs();
+            btn.style.display = 'block'
+            if (res == 'true') {
+                answers.correct++;
+                selAnswer.innerHTML = '<div class="alert alert-success" role="alert"> Correcto!!! </div>' + corectAnswerValue
+
+            } else {
+                answers.wrong++;
+                selAnswer.innerHTML = '<div class="alert alert-danger" role="alert"> Incorrecto!!! </div>' + corectAnswerValue
+            }
+            document.getElementById('score').innerHTML = 'Correcto  : ' + answers.correct + '<br><br> Incorrecto : ' + answers.wrong
+        }
+
+
+        function questionBuilder(cor, incor) {
+            var holder = incor;
+            holder.push(cor);
+            holder.sort();
+
+            selAnswer.innerHTML = '';
+            for (var x = 0; x < holder.length; x++) {
+                var el = document.createElement('div')
+                var checker = holder[x] == cor ? true : false;
+                el.setAttribute('data-cor', checker);
+                el.setAttribute("class", "btn btn-success");
+                el.innerHTML = holder[x];
+                el.addEventListener('click', sendAnswer)
+                selAnswer.appendChild(el);
+            }
+        }
+
+
+        function requestAJAX(url, callback) {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    callback(JSON.parse(xhr.responseText))
+                }
+            }
+            xhr.open('GET', url, true)
+            xhr.send();
+        }
+    </script>
+</body>
+<!-- Footer -->
+<footer class="page-footer font-small blue pt-4">
+
+    <!-- Footer Links -->
+    <div class="container-fluid text-center text-md-left">
+
+        <!-- Grid row -->
+        <div class="row">
+
+            <!-- Grid column -->
+            <div class="col-md-6 mt-md-0 mt-3">
+
+                <!-- Content -->
+                <h5 class="text-uppercase">!La trivia! (Version ingles)</h5>
+                <p>Diviertete con esta trivia!.</p>
+
+            </div>
+            <!-- Grid column -->
+
+            <hr class="clearfix w-100 d-md-none pb-3">
+
+            <!-- Grid column -->
+            <div class="col-md-3 mb-md-0 mb-3">
+
+                <!-- Links -->
+                <h5 class="text-uppercase">Links</h5>
+
+                <ul class="list-unstyled">
+                    <li>
+                        <a href="https://www.instagram.com/chehin.j/">Instagram</a>
+                    </li>
+                </ul>
+
+            </div>
+            <!-- Grid column -->
+
+        </div>
+        <!-- Grid row -->
+
+    </div>
+    <!-- Footer Links -->
+
+    <!-- Copyright -->
+    <div class="footer-copyright text-center py-3">© 2020 Copyright:
+        <a href="https://juanchehin.github.io/CR/"> CRDevelopment</a>
+    </div>
+    <!-- Copyright -->
+
+</footer>
+<!-- Footer -->
+
+</html>

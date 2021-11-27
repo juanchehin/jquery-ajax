@@ -1,0 +1,34 @@
+<pre class="prettyprint linenums">&lt;!doctype html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;title&gt;AJAX&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Learn AJAX&lt;/h1&gt;
+    &lt;div id="output"&gt;&lt;/div&gt;
+    &lt;button id="trigger"&gt;Get a Joke&lt;/button&gt;
+    &lt;script type="text/javascript"&gt;
+        var joker = document.querySelector('#trigger');
+        joker.addEventListener('click',loadJoke)
+        
+        function loadJoke(){
+            var ajax = new XMLHttpRequest();
+            ajax.onreadystatechange = function(){
+                if(this.readyState==4){
+                    if(this.status==200){
+                        var json = JSON.parse(this.responseText);
+                        console.log(json)
+                        var html = '&lt;div&gt;&lt;img src="'+json.icon_url+'"&gt;'+json.value+'&lt;/div&gt;';
+                        document.querySelector('#output').innerHTML = html;
+                    }
+                }
+            }
+            ajax.open('GET','https://api.chucknorris.io/jokes/random',true);
+            ajax.send();
+        }
+        
+        
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>

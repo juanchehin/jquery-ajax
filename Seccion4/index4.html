@@ -1,0 +1,42 @@
+<!doctype html>
+<!-- Archivo que permite obtener datos de una API de 'chuck norris' : https://api.chucknorris.io/ 
+Leccion 13 - Limpiando codigo - Funciones de flecha '=>'-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJAX</title>
+</head>
+
+<body>
+    <h1>Learn AJAX</h1>
+    <div id="output"></div>
+    <button id="loadNew" onclick="loadJoke()">Get a Joke</button>
+    <script type="text/javascript">
+        // Llamo a la funcion loadJoke
+        // loadJoke();
+
+        function loadJoke() {
+            var url = 'https://api.chucknorris.io/jokes/random';
+            // Fetch : alternativa a XMLHttpRequest
+            fetch('https://api.chucknorris.io/jokes/random')
+                .then(resJSON)
+                .then(json => {
+                    document.querySelector('#output').innerHTML = '<div><img src="' + json.icon_url + '">' + json.value + '<div>'
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+
+            function resJSON(response) {
+                return response.json();
+                // return null;
+            }
+        }
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Permite hacer un POST para enviar informacion fija, mediante XMLHttpRequest -->
+<style>
+    .btn {
+        border: 1px black;
+        padding: 10 px;
+        display: inline-block;
+        width: 100px;
+        text-align: center;
+    }
+    
+    .hide {
+        display: none
+    }
+    
+    form {
+        background-color: aliceblue;
+        border: 1px black;
+        padding: 10px;
+    }
+</style>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Server</title>
+</head>
+
+<body>
+
+    <h1>JSON server AJAX testing</h1>
+    <div id="message"></div>
+    <div id="load1" class="btn hide">load 1</div>
+    <div id="send1" class="btn hide">Send 1</div>
+
+    <div id="pageInfo"></div>
+    <div id="prev" class="btn">Prev</div>
+    <div id="next" class="btn">Next</div>
+
+    <form id="myForm">
+        <input type="text" name="first" value="Jason">
+        <input type="text" name="last" value="Tester">
+        <input type="text" name="company" value="ACME">
+        <input type="submit" value="Send Data">
+    </form>
+    <br>
+    <script>
+        var load1 = document.querySelector('#load1');
+        var message = document.getAnimations('message');
+        load1.addEventListener('click', function() {
+            makeRequest('http://localhost:3000/posts', 'POST', 'first=John&last=Jason&company=Whatever&another=helloworld')
+        })
+
+        function makeRequest(url, requestType, data) {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4) {
+                    message.innerHTML = xhr.response;
+                    console.log(JSON.parse(xhr.response))
+                }
+            }
+            xhr.open(requestType, url, true)
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+            xhr.send(data)
+        }
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,24 @@
+<pre class="prettyprint linenums">&lt;!doctype html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;title&gt;Learn AJAX&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Learn AJAX jQuery&lt;/h1&gt;
+    &lt;div id="output"&gt;&lt;/div&gt;
+    &lt;button id="clickMe"&gt;Click Here&lt;/button&gt;
+    &lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"&gt;&lt;/script&gt;
+    &lt;script&gt;
+        $('#clickMe').click(webData);
+        function webData() {
+            var url = 'https://api.spacexdata.com/v2/launches/'
+            $.get(url,output)
+        }
+        function output(data) {
+            console.log(data[1])
+            $('#output').html('&lt;h2&gt;' + data[1].flight_number + '&lt;/h2&gt;&lt;p&gt;' + data[1].details + '&lt;/p&gt;')
+        }
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>

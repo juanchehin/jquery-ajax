@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Funcion : Permite obtener data mediante una peticion XMLHttpRequest() a https://reqres.in/api/users/2 
+Muestra por consola el resultado -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJAX tester</title>
+</head>
+
+<body>
+    <h1>AJAX Tester</h1>
+    <div> URL : <input type="text" name="url" value="https://reqres.in/api/users/2" id=""> </div>
+    <div><input type="button" name="sender" value="Make request"></div>
+    <script>
+        // Espera un evento
+        document.addEventListener("DOMContentLoaded",
+            function(event) {
+                document.querySelector('input[name="sender"]').addEventListener('click', makeRequest)
+            });
+
+        function makeRequest() {
+            console.log('worked')
+                // Creo el objeto XMLHttpRequest
+            var xhr = new XMLHttpRequest();
+
+            xhr.onreadystatechange = function() {
+                // Consulto el estado de la peticion
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    console.log(xhr.responseText)
+                }
+            }
+            xhr.open('GET', 'https://reqres.in/api/users/2', true)
+            xhr.send();
+        }
+    </script>
+</body>
+
+</html>

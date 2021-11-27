@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Esta app permite realizar peticiones a la API de wikipedia con un termino de busqueda .Ver 2 -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJAX APIs</title>
+</head>
+
+<body>
+
+    <h1>AJAX Information API Application</h1>
+    <input type="text" name="searchTerm" value="Javascript">
+    <input type="button" id="search" value="search">
+    <div id="output"></div>
+
+    <script>
+        // La siguiente funcion se dispara al cargar el documento DOM
+        window.onload = function() {
+            document.getElementById('search').addEventListener('click', showResults)
+        }
+
+        function showResults() {
+            var searchTerm = document.querySelector('input[name="searchTerm"]').value;
+            console.log("searc term es : ", searchTerm)
+                // var url = 'https://es.wikipedia.org/w/api.php?action=query&list=search&srprop=snippet&format=json&origin=*&utf8=&srsearch=' + searchTerm;
+            var url = 'https://es.wikipedia.org/w/api.php?format=json&action=opensearch&origin=*&search=' + searchTerm;
+            var output = document.querySelector('#output');
+            output.innerHTML = "<h2> Search Term : " + searchTerm + "<h2>";
+            ajaxJS(url, function(response) {
+                for (var x in response) {
+                    var holder = typeof response[x] == 'string' ? response[x] : response[x][0];
+                    output.innerHTML += '<div class="dataOutput">' + holder + '<div>';
+                }
+            })
+        }
+
+        function ajaxJS(url, callback) {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    callback(JSON.parse(xhr.responseText))
+                }
+            }
+            xhr.open('GET', url, true);
+            xhr.send();
+        }
+    </script>
+</body>
+
+</html>

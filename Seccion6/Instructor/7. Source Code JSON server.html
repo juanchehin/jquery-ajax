@@ -1,0 +1,43 @@
+<pre class="prettyprint linenums">&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;JSON Server&lt;/title&gt;
+    &lt;style&gt;
+        .btn {
+            border: 1px solid black;
+            padding: 10px;
+            display: inline-block;
+            width: 100px;
+            text-align: center;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;JSON Server AJAX testing&lt;/h1&gt;
+    &lt;div id="message"&gt;&lt;/div&gt;
+    &lt;div id="load1" class="btn"&gt;load 1&lt;/div&gt;
+    &lt;div id="send1" class="btn"&gt;Send 1&lt;/div&gt;
+    &lt;script&gt;
+        var load1 = document.querySelector('#load1');
+        var send1 = document.querySelector('#send1');
+        var message = document.getElementById('message');
+        load1.addEventListener('click', function () {
+            makeRequest('http://localhost:3000/posts', 'GET', {})
+        })
+        send1.addEventListener('click', function () {
+            makeRequest('http://localhost:3000/posts', 'POST', 'first=John&amp;last=Jason&amp;company=Whatever&amp;another=helloworld')
+        })
+        function makeRequest(url, requestType, data) {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+                    message.innerHTML = xhr.response;
+                    console.log(JSON.parse(xhr.response))
+                }
+            }
+            xhr.open(requestType, url, true)
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+            xhr.send(data)
+        }
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>

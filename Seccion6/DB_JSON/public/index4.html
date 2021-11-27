@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Permite hacer un GET y POST mediante XMLHttpRequest .
+Ademas tiene una interfaz
+-->
+<style>
+    .btn {
+        border: 1px black;
+        padding: 10 px;
+        display: inline-block;
+        width: 100px;
+        text-align: center;
+    }
+    
+    .hide {
+        display: none
+    }
+    
+    form {
+        background-color: aliceblue;
+        border: 1px black;
+        padding: 10px;
+    }
+</style>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Server</title>
+</head>
+
+<body>
+
+    <h1>JSON server AJAX testing</h1>
+    <div id="message"></div>
+    <div id="load1" class="btn hide">load 1</div>
+    <div id="send1" class="btn hide">Send 1</div>
+
+    <div id="pageInfo"></div>
+    <div id="prev" class="btn">Prev</div>
+    <div id="next" class="btn">Next</div>
+
+    <form id="myForm">
+        <input type="text" name="first" value="Jason">
+        <input type="text" name="last" value="Tester">
+        <input type="text" name="company" value="ACME">
+        <input type="submit" value="Send Data">
+    </form>
+    <br>
+    <input type="text" name="search">
+    <button class='btn' id="search">Search</button>
+
+    <div id="output"></div>
+    <br>
+    <textarea id="comments"></textarea>
+    <button class="btn" id="addComment">Add Comment</button>
+    <br>
+
+
+
+    <script>
+        var load1 = document.querySelector('#load1');
+        var send1 = document.getAnimations('#send1');
+        var message = document.getAnimations('message');
+        var output = document.getAnimations('output');
+        var currentId = 1;
+
+        // document.querySelector('#load1');
+        // document.querySelector('#send1');
+
+        document.querySelector('#next').addEventListener('click', function() {
+            currentId++;
+            loadPage();
+        })
+
+        document.querySelector('#prev').addEventListener('click', function() {
+            currentId--;
+            loadPage();
+        })
+
+        document.querySelector('#myForm').addEventListener('submit', function(e) {
+            e.preventDefault()
+        })
+
+        document.querySelector('#search').addEventListener('click', function() {
+
+        })
+
+        document.querySelector('#addComment').addEventListener('click', function() {
+
+        })
+
+        var message = document.getAnimations('message');
+        // Escucha el evento para 'load1'
+        load1.addEventListener('click', function() {
+            makeRequest('http://localhost:3000/posts', 'GET', {})
+        })
+
+        // Escucha el evento para 'send1'
+        send1.addEventListener('click', function() {
+            makeRequest('http://localhost:3000/posts', 'POST', 'first=John&last=Jason&company=Whatever&another=helloworld')
+        })
+
+        function loadPage() {
+            console.log('Build page')
+        }
+
+        // GET
+        function makeGet(url) {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4) {
+                    message.innerHTML = xhr.response;
+                    console.log(JSON.parse(xhr.response))
+                }
+            }
+            xhr.open('GET', url, true)
+            xhr.send(data)
+        }
+
+        // POST
+        function makePost(url, data) {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4) {
+                    message.innerHTML = xhr.response;
+                    console.log(JSON.parse(xhr.response))
+                }
+            }
+            xhr.open(requestType, url, true)
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+            xhr.send(data)
+        }
+    </script>
+
+</body>
+
+</html>

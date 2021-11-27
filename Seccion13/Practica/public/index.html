@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Currency Prices!!!</title>
+</head>
+<!-- Aplicacion que permite obtener las el valor de las distintas monedas en dolares -->
+
+<body>
+    <button id="allRates">See All</button>
+    <ul id="output"></ul>
+    <script>
+        var allRates = document.querySelector('#allRates');
+        const url = 'https://api.coinmarketcap.com/v1/ticker/';
+        allRates.addEventListener('click', getAllRates);
+        // Obtengo todas las tarifas
+        function getAllRates() {
+            fetch(url).then(function(response) {
+                return response.json()
+            }).then(function(data) {
+                console.log('data es : ', data);
+                outputToPage(data);
+            }).catch(function(error) {
+                console.log(JSON.stringify(error));
+            });
+        }
+
+        function outputToPage(data) {
+            data.forEach(function(item, i) {
+                let priceFixed = (Math.round(item.price_usd * 100) / 100);
+                let li = document.createElement('li');
+                let span = document.createElement('span');
+                span.innerHTML = `${item.name} ${item.symbol} ${priceFixed}`;
+                li.appendChild(span);
+                output.appendChild(li);
+                console.log(item);
+            })
+        }
+    </script>
+
+</body>
+
+</html>

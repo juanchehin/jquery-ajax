@@ -1,0 +1,28 @@
+<pre class="prettyprint linenums">&lt;!doctype html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;title&gt;Learn AJAX&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Learn AJAX jQuery&lt;/h1&gt;
+    &lt;div id="output"&gt;&lt;/div&gt;
+    &lt;button id="clickMe"&gt;Click Here&lt;/button&gt;
+    &lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"&gt;&lt;/script&gt;
+    &lt;script&gt;
+        $('#clickMe').click(webData);
+        function webData() {
+            $.ajax({
+                method: 'GET'
+                , url: 'https://jsonplaceholder.typicode.com/posts/2'
+                , dataType: 'json'
+            }).done(output).fail(function () {
+                console.log('Error!!');
+            })
+        }
+        function output(data) {
+            $('#output').html('&lt;h2&gt;' + data.title + '&lt;/h2&gt;&lt;p&gt;' + data.body + '&lt;/p&gt;')
+        }
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>

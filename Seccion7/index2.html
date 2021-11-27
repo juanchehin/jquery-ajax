@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Permite obtener datos de una hoja de calculo de google y mostrarlos por consola -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Server</title>
+</head>
+
+<body>
+
+    <h1>Learn AJAX JSON data from Google Sheets</h1>
+    <button id="loadData">Load data</button>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>
+        $(function() {
+            $('#loadData').click(function() {
+                var url = 'https://spreadsheets.google.com/feeds/list/1zgr1Kps_GJs0AOegqnmPgUoO93-cqj-9-Kh8m32GvAo/od6/public/values?alt=json'
+                $.getJSON(url, function(data) {
+                    // console.log(data)
+                    console.log(data.feed.entry)
+                    var html = '<h3>Google Sheet Data </h3>';
+                    $.each(data.feed.entry, function(key, val) {
+                        console.log(val.gsx$company.$t)
+                        console.log(val.gsx$first.$t)
+                        console.log(val.gsx$last.$t)
+                        console.log(val.gsx$group.$t)
+                        html += '<div>' + val.gsx$first.$t + ' ' +
+                            val.gsx$last.$t + '' +
+                            val.gsx$company.$t + '' +
+                            val.gsx$group.$t + '</div>'
+                    })
+                    $('#output').html(html);
+                })
+            })
+        });
+    </script>
+
+</body>
+
+</html>

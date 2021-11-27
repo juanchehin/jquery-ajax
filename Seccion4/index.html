@@ -1,0 +1,51 @@
+<!doctype html>
+<!-- Archivo que carga un txt. Debe ejecutarse en un servidor web para poder
+ejecutarse si no da error de CORS -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJAX</title>
+</head>
+
+<body>
+    <h1>Learn AJAX</h1>
+    <div id="output"></div>
+    <button id="loadNew">Load</button>
+
+    <script type="text/javascript">
+        // Almaceno el valor del div con id output
+        var output = document.getElementById('output');
+        // Obtengo el valor del boton
+        var buttonClick = document.getElementById('loadNew');
+        // Funcion que se activa al hacer click y dispara la peticion ajax
+        console.log('Console 1');
+        buttonClick.addEventListener('click', function() {
+            loadAjax();
+            console.log('Console 2');
+        })
+        console.log('Console 3');
+
+        function loadAjax() {
+            console.log('Console 4');
+            var xhr = new XMLHttpRequest();
+            console.log('Console 5');
+            xhr.onreadystatechange = function() {
+                console.log('Console 6');
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    console.log('Console 7');
+                    output.innerHTML = xhr.responseText;
+                }
+            }
+            console.log('Console 8');
+            xhr.open("GET", "simple.txt", true);
+            console.log('Console 9');
+            xhr.send();
+        }
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,67 @@
+<!doctype html>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJAX</title>
+</head>
+
+<body>
+    <h1>Learn AJAX</h1>
+    <div id="output"></div>
+    <button id="loadNew">Load</button>
+
+    <script type="text/javascript">
+        // Almaceno el valor del div con id output
+        var output = document.getElementById('output');
+        // Obtengo el valor del boton
+        var buttonClick = document.getElementById('loadNew');
+        // Funcion que se activa al hacer click y dispara la peticion ajax
+        buttonClick.addEventListener('click', function() {
+            loadAjax();
+        })
+
+        function loadAjax() {
+            // Nueva peticion AJAX
+            console.log('console 1');
+            var ajax = new XMLHttpRequest();
+            console.log('console 2');
+            // onreadystatechange : será llamada automáticamente cada vez que cambie la propiedad readyState del objeto
+            ajax.onreadystatechange = function() { // Aqui, salta a ajax.open
+                // Controlo 'ready' y estado
+                console.log('console 3');
+                // Queremos que la info cuando este lista (http response = 200) (State = 4)
+                if (ajax.readyState == 4 && ajax.status == 200) {
+                    // Datos listos
+                    var json = JSON.parse(ajax.responseText);
+                    var data = json.results[0];
+
+                    var message = '<h2>' + data.name.first + ' ' +
+                        data.name.last + '<h2><img src="' + data.picture.large + '">"'
+
+                    output.innerHTML = message;
+
+                    /*
+                    console.log('console 4');
+                    console.log(ajax.responseText);
+                    console.log('console 5');
+                    var jsonData = JSON.parse(ajax.responseText);
+                    console.log(jsonData);
+                    console.log('console 6');
+                    */
+                }
+            }
+            console.log('console 7');
+            ajax.open('GET', 'https://randomuser.me/api/', true);
+            console.log('console 8');
+            ajax.send();
+            console.log('console 9');
+        }
+    </script>
+
+</body>
+
+</html>

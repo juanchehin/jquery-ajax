@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tweet Objects from Node</title>
+</head>
+
+<body>
+    <input type="text" id="search" placeholder="Search Term">
+    <button id="getTweets">Search Tweets</button>
+
+    <script>
+        const search = document.getElementById('search');
+        const getTweets = document.getElementById('getTweets');
+        const output = document.getElementById('output');
+
+        getTweets.addEventListener('click', getAllTweets);
+
+        function getAllTweets() {
+            const url = '/tweets/' + search.value;
+            fetch(url).then(function(response) {
+                return response.json()
+            }).then(function(data) {
+                console.log(data)
+            }).catch(function(error) {
+                console.log(JSON.stringify(error));
+            })
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<!-- Codigo con formulario -->
+
+<head>
+    <meta charset="utf-8">
+    <title>AJAX</title>
+</head>
+
+<body>
+    <h1>Learn AJAX</h1>
+    <div id="output"></div>
+    <form id="myForm">
+        <input type="text" name="first" value="Laurence">
+        <br>
+        <input type="text" name="last" value="Svekis">
+        <br>
+        <input type="text" name="company" value="Discoveryvip">
+        <br>
+        <input type="submit" value="Send my Data">
+    </form>
+    <!-- ================ -->
+    <!-- Parte Javascript -->
+    <!-- ================ -->
+    <script type="text/javascript">
+        // Obtengo el formulario "myForm"
+        var myForm = document.getElementById('myForm')
+        console.log('myForm es : ', myForm);
+        // Espero el boton
+        myForm.addEventListener('submit', function(e) {
+            // console.log('e es : ', e);
+            // Detiene el evento
+            e.preventDefault();
+            //var data = JSON.stringify(formData(myForm));
+            // Llamo a la funcion loadJSON, como parametro : listado de valores text
+            loadJSON(formData(myForm))
+        })
+
+        function formData(form) {
+            // Obtengo los elementos input con "type=text"
+            var el = form.querySelectorAll('input[type="text"]');
+            console.log('el es : ', el);
+            var myData = '';
+            for (var x = 0; x < el.length; x++) {
+                var name = el[x].name;
+                var value = el[x].value;
+                //myData[name] = value;
+                myData += name + '=' + value + '&'
+            }
+            console.log('myData es : ', myData);
+            return myData.slice(0, -1);
+        }
+
+        function loadJSON(data) {
+            const url = 'http://s179017901.onlinehome.us/discoveryvip/';
+            //'foo=bar&lorem=ipsum'
+            console.log('data es : ', data)
+            const myData = data
+                // **** Fetch ******
+            fetch(url, {
+                method: 'post',
+                headers: {
+                    "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+                },
+                body: myData
+            }).then(function(response) {
+                console.log('response 2 es : ', response)
+                return response.json()
+            }).then(function(data) {
+                console.log('data 2 es : ', data)
+            }).catch(error => console.log('error es : ', error))
+        }
+    </script>
+</body>
+
+</html>

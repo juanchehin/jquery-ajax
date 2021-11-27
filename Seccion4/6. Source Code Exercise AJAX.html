@@ -1,0 +1,46 @@
+<pre class="prettyprint linenums">&lt;!doctype html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;title&gt;AJAX&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Learn AJAX&lt;/h1&gt;
+    &lt;div id="output"&gt;&lt;/div&gt;
+    &lt;button id="loadNew"&gt;Load&lt;/button&gt;
+    
+    &lt;script type="text/javascript"&gt;
+        var output = document.getElementById('output');
+        var buttonClick = document.getElementById('loadNew')
+        buttonClick.addEventListener('click',function(){
+            loadAjax();
+        })
+        function loadAjax(){
+        var ajax = new XMLHttpRequest();
+        ajax.onreadystatechange = function(){
+            //console.log('state changed',ajax.readyState,ajax.status)
+            if(ajax.readyState == 4 &amp;&amp; ajax.status==200){
+                   // console.log(ajax.responseText)
+                var json = JSON.parse(ajax.responseText);
+                 var data = json.results[0];
+         
+                var message = '&lt;h2&gt;'+data.name.first + '  ' + data.name.last + '&lt;/h2&gt;&lt;img src="'+data.picture.large +'"&gt;'
+               
+                 output.innerHTML = message;
+            }
+        }
+        /*
+        ajax.onprogress =function(){
+            console.log('PROGRESS',ajax.readyState,ajax.status)
+        }
+        ajax.onload =function(){
+            console.log('DONE',ajax.readyState,ajax.status)
+        }
+        */
+        ajax.open('GET','https://randomuser.me/api/',true)
+        ajax.send();
+        }
+        
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>

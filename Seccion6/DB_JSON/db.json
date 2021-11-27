@@ -1,0 +1,64 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "author": "typicode"
+    },
+    {
+      "first": "FIrst test",
+      "last": "Last test",
+      "company": "Company test",
+      "id": 2
+    },
+    {
+      "first": "John$last=Jason",
+      "company": "Whatever",
+      "another": "helloworld",
+      "id": 3
+    },
+    {
+      "first": "Jason",
+      "last": "Tester",
+      "company": "ACME",
+      "id": 4
+    },
+    {
+      "first": "Jason",
+      "last": "Tester",
+      "company": "ACME",
+      "id": 5
+    },
+    {
+      "first": "Jason",
+      "last": "Tester",
+      "company": "ACME",
+      "id": 6
+    },
+    {
+      "first": "Jason",
+      "last": "Tester",
+      "company": "ACME",
+      "id": 7
+    },
+    {
+      "first": "Jason",
+      "last": "Tester",
+      "company": "ACME",
+      "id": 8
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  },
+  "test": {
+    "whatever": "Hello world"
+  }
+}

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Permite cargar datos en data sheet de google con un formulario -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Server</title>
+</head>
+
+<body>
+
+    <h1>Learn AJAX JSON data from Google Sheets</h1>
+    <button id="loadData">Load data</button>
+    <button type="button" id="fillData">Get Random User</button>
+    <form id="myForm">
+        <div>First Name :
+            <input type="text" name="First" value="First Name">
+            <br> </div>
+        <div>Last Name :
+            <input type="text" name="Last" value="Last Name">
+            <br> </div>
+        <div>Company :
+            <input type="text" name="Company" value="Company">
+            <br> </div>
+        <div>Group :
+            <input type="text" name="Group" value="Group">
+            <br> </div>
+        <div>Email :
+            <input type="text" name="Email" value="Email@email.com">
+            <br> </div>
+        <button type="submit" id="submit">Send Data to Google Sheet</button>
+    </form>
+    <div id="output"></div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+
+    <script>
+        $(function() {
+            $('#loadData').click(function() {
+                var url = 'https://spreadsheets.google.com/feeds/list/1zgr1Kps_GJs0AOegqnmPgUoO93-cqj-9-Kh8m32GvAo/od6/public/values?alt=json'
+                $.getJSON(url, function(data) {
+                    console.log('data es ', data)
+                        // console.log(data.feed.entry)
+                    var html = '<h3>Google Sheet Data </h3> <ul>';
+                    $.each(data.feed.entry, function(key, val) { // Key: nombre del item ; val : valor del item
+                        console.log('data  1 es ', data)
+                        console.log('key es ', key)
+                        console.log('val es ', val)
+                        console.log('val.gsx$company.$t : ', val.gsx$company.$t)
+                        html += '<li>'
+                            /*for (var x = 0; x < val.length; x++) {
+                                console.log('val[x] : ', val[x])
+                                html += val[x] + ' '
+                            }*/
+                        html += '</li>'
+                    })
+                    html += '</ul>'
+                    $('#output').html(html);
+                })
+            })
+        });
+    </script>
+
+</body>
+
+</html>

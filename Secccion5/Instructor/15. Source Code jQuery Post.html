@@ -1,0 +1,39 @@
+<pre class="prettyprint linenums">&lt;!doctype html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;title&gt;Learn AJAX&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Learn AJAX jQuery&lt;/h1&gt;
+    &lt;div id="output"&gt;&lt;/div&gt;
+    &lt;form id="myForm"&gt; First Name :
+        &lt;input type="text" name="first" value="Laurence"&gt;
+        &lt;br&gt; Last Name:
+        &lt;input type="text" name="last" value="Svekis"&gt;
+        &lt;input type="submit" value="submit data"&gt; &lt;/form&gt;
+&lt;script src="https://unpkg.com/axios/dist/axios.min.js"&gt;&lt;/script&gt;
+    &lt;script&gt;
+        $('#myForm').submit(function (e) {
+            e.preventDefault();
+            var myData = {
+                firstName:  $('input[name="first"]').val()
+                , lastName: $('input[name="last"]').val()
+            }
+            var url = 'http://s179017901.onlinehome.us/discoveryvip/';
+            
+            $.ajax({
+                url:url,
+                type:"post",
+                data:myData,
+                success:function(data){
+                    console.log(data)
+                }
+            })
+            
+            
+            
+        })
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;;/html&gt;</pre>

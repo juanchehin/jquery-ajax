@@ -1,0 +1,38 @@
+<pre class="prettyprint linenums">&lt;!doctype html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"&gt;
+    &lt;title&gt;AJAX &lt;/title&gt;
+    &lt;style&gt;
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;AJAX&lt;/h1&gt;
+    &lt;div id="output"&gt;&lt;/div&gt;
+    &lt;button type="button" id="btn"&gt;Click Me for More&lt;/button&gt;
+    &lt;script&gt;
+        //https://codepen.io/discoveryvip/pen/wmzLQJ
+        //https://randomuser.me/api/
+        var btn = document.getElementById('btn');
+        btn.addEventListener('click', nextItem)
+        var output = document.getElementById('output');
+        function nextItem() {
+            var url = 'https://swapi.co/api/planets/';
+            requestAJAX(url, function (data) {
+                console.log(data)
+            })
+        }
+        function requestAJAX(url, callback) {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 &amp;&amp; xhr.status == 200) {
+                    callback(JSON.parse(xhr.responseText))
+                }
+            }
+            xhr.open('GET', url, true)
+            xhr.send();
+        }
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>

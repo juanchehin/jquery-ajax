@@ -1,0 +1,47 @@
+<pre class="prettyprint linenums">&lt;!doctype html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"&gt;
+    &lt;title&gt;AJAX &lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;AJAX&lt;/h1&gt;
+    &lt;div&gt;Score :&lt;span id="score"&gt;&lt;/span&gt;&lt;/div&gt;
+    &lt;div id="output"&gt;&lt;/div&gt;
+    &lt;button type="button" id="btn"&gt;Click Me for More&lt;/button&gt;
+    &lt;script&gt;
+        var btn = document.getElementById('btn');
+        btn.addEventListener('click', nextItem)
+        var answers = {
+            'correct': 0
+            , 'wrong': 0
+        }
+        var output = document.getElementById('output');
+        function nextItem() {
+            var url = 'https://opentdb.com/api.php?amount=1&amp;&amp;type=boolean';
+            var html = '&lt;h2&gt;Question&lt;/h2&gt; '
+            requestAJAX(url, function (data) {
+                console.log(data.results[0]);
+                var obj = data.results[0];
+                html += '&lt;div&gt;&lt;div class="cat"&gt;' + obj.category + '&lt;/div&gt;';
+                html += '&lt;div class="que"&gt;' + obj.question + '&lt;/div&gt;';
+                html += '&lt;/div&gt;'
+                output.innerHTML = html;
+            
+            })
+        }
+ 
+        function requestAJAX(url, callback) {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 &amp;&amp; xhr.status == 200) {
+                    callback(JSON.parse(xhr.responseText))
+                }
+            }
+            xhr.open('GET', url, true)
+            xhr.send();
+        }
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>

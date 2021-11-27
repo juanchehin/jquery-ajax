@@ -1,0 +1,36 @@
+<pre class="prettyprint linenums">&lt;!doctype html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;title&gt;JSON&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Learn JSON&lt;/h1&gt;
+    &lt;div id="output"&gt;&lt;/div&gt;
+    &lt;script type="text/javascript"&gt;
+        var myObj = {
+            "friends": [{
+                "firstName": "Mike"
+                , "lastName": "Jones"
+           },{
+                "firstName": "John"
+                , "lastName": "Smith"
+           } ,{
+                "firstName": "Laurence"
+                , "lastName": "Svekis"
+           },{
+                "firstName": "Alice"
+                , "lastName": "James"
+           }]
+        }
+        
+        var users = myObj.friends;
+        var html = '';
+        for(var x in users){
+            html += (Number(x)+1) + ' . ' + users[x].firstName + ' ' + users[x].lastName + '&lt;br&gt;'
+        }
+        document.getElementById('output').innerHTML = html;
+        
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>

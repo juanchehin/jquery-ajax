@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<!-- Practicas seccion 5,video 18 - Con cada click del boton, 
+    cambia el 'div' y las cajas de texto - Ajax con jQuery -->
+
+<head>
+    <meta charset="utf-8">
+    <title>Learn AJAX</title>
+</head>
+
+<body>
+    <h1>Learn AJAX - jQuery</h1>
+    <div id="output"></div>
+    <form id="myForm">
+        First Name : <input type="text" name="first" value="Laurence">
+        <br> Lasta Name :
+        <input type="text" name="last" value="Svekis">
+        <input type="submit" value="submit data">
+    </form>
+    <!-- Biblioteca de axios -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!--  -->
+    </script>
+    <script>
+        var myForm = document.getElementById('myForm');
+        myForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            var url = 'https://randomuser.me/api/?results=10';
+            axios.get(url)
+                .then(function(data) {
+                    var person = data.data.results[0];
+                    document.querySelector('input[name="first"]').value = person.name.first
+                    document.querySelector('input[name="last"]').value = person.name.last
+
+                    var html = person.name.first + ' ' + person.name.last;
+                    document.querySelector('#output').innerHTML = html;
+                })
+        })
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<!-- Practicas seccion 5,video 10 - Muestra de funcion each para iterar - Ajax con jQuery -->
+
+<head>
+    <meta charset="utf-8">
+    <title>AJAX</title>
+</head>
+
+<body>
+    <h1>Learn AJAX - jQuery</h1>
+    <div id="output"></div>
+    <button id="clickMe">Click Here</button>
+    <!-- Obtenido de https://developers.google.com/speed/libraries -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>
+        // Se dispara 'webData' al hacer click en "clickMe"
+        $('#clickMe').click(webData);
+
+        function webData() {
+            var url = 'https://api.spacexdata.com/v2/launches/'
+            $.getJSON(url, output)
+        }
+
+        function output(data) {
+            console.log(data)
+            var html = "";
+            $.each(data, function(k, v) {
+                html += '<h3>Flight Number' + v.flight_number + '</h3>';
+                html += 'Details : ' + v.details + '<br>'
+            })
+            $('#output').html(html)
+        }
+    </script>
+
+</body>
+
+</html>

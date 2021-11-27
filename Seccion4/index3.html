@@ -1,0 +1,38 @@
+<!doctype html>
+<!-- Archivo que permite obtener datos de una API de 'chuck norris' : https://api.chucknorris.io/ - Mediante el metodo FETCH  de JavaScript-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJAX</title>
+</head>
+
+<body>
+    <h1>Learn AJAX</h1>
+    <div id="output"></div>
+    <button id="loadNew">Get a Joke</button>
+    <script type="text/javascript">
+        // Llamo a la funcion loadJoke
+        loadJoke();
+
+        function loadJoke() {
+            var url = 'https://api.chucknorris.io/jokes/random';
+            // Fetch : alternativa a XMLHttpRequest
+            fetch('https://api.chucknorris.io/jokes/random').then(function(response) {
+                console.log(response.headers.get('Content-type'))
+                console.log(response.headers.get('Date'))
+                console.log(response.type)
+                return response.json()
+            }).then(function(text) {
+                console.log('text es : ', text);
+            }).catch(function(error) {
+                console.log('error es ', error);
+            })
+        }
+    </script>
+
+</body>
+
+</html>
